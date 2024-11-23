@@ -1,20 +1,23 @@
 package fit.cis5100.akann2024;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Console {
+
     public static int getInt(Scanner sc, String prompt) {
         int i = 0;
         boolean isValid = false;
         while (!isValid) {
-            System.out.print(prompt);
-            if (sc.hasNextInt()) {
+            try {
+                System.out.print(prompt);
                 i = sc.nextInt();
                 isValid = true;
-            } else {
+            } catch (InputMismatchException e) {
                 System.out.println("Error! Invalid integer value. Try again.");
+            } finally {
+                sc.nextLine(); // discard any other data entered on the line
             }
-            sc.nextLine(); // discard any other data entered on the line
         }
         return i;
     }
@@ -40,7 +43,7 @@ public class Console {
         boolean isValid = false;
         while (!isValid) {
             System.out.print(prompt);
-            s = sc.nextLine();
+            s = sc.nextLine().trim();
             if (s.isEmpty()) {
                 System.out.println("Error! This entry is required. Try again.");
             } else {
