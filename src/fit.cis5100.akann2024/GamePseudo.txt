@@ -1,0 +1,68 @@
+CLASS Game
+    DECLARE number AS INTEGER
+    DECLARE guessNumber AS INTEGER
+    DECLARE counter AS INTEGER
+
+    CONSTRUCTOR Game()
+        SET number TO getRandomNumber()
+        SET guessNumber TO 0
+        SET counter TO 1
+    END CONSTRUCTOR
+
+    METHOD getRandomNumber()
+        RETURN a random integer between 1 and 100
+    END METHOD
+
+    METHOD displayWelcomeMessage()
+        PRINT "Welcome to the Guess the Number Game"
+        PRINT "++++++++++++++++++++++++++++++++++++"
+        PRINT an empty line
+    END METHOD
+
+    METHOD displayPleaseGuessMessage()
+        PRINT "I'm thinking of a number from 1 to 100."
+        PRINT "Try to guess it."
+        PRINT an empty line
+    END METHOD
+
+    METHOD displayCorrectGuessMessage()
+        PRINT "You got it in [counter] tries."
+        IF counter <= 3 THEN
+            PRINT "Great work! You are a mathematical wizard."
+        ELSE IF counter <= 7 THEN
+            PRINT "Not too bad! You've got some potential."
+        ELSE
+            PRINT "What took you so long? Maybe you should take some lessons."
+        END IF
+        PRINT an empty line
+    END METHOD
+
+    METHOD displayGuessAgainMessage()
+        IF guessNumber > number THEN
+            IF guessNumber - number > 10 THEN
+                PRINT "Way too high! Guess again."
+            ELSE
+                PRINT "Too high! Guess again."
+            END IF
+        ELSE
+            IF number - guessNumber > 10 THEN
+                PRINT "Way too low! Guess again."
+            ELSE
+                PRINT "Too low! Guess again."
+            END IF
+        END IF
+        PRINT an empty line
+    END METHOD
+
+    METHOD playGame(scanner)
+        WHILE guessNumber != number
+            SET guessNumber TO Console.getIntWithinRange(scanner, "Enter number: ", 0, 101)
+            IF guessNumber == number THEN
+                CALL displayCorrectGuessMessage()
+            ELSE
+                CALL displayGuessAgainMessage()
+            END IF
+            INCREMENT counter
+        END WHILE
+    END METHOD
+END CLASS

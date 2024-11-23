@@ -1,0 +1,75 @@
+CLASS Console
+    METHOD getInt(scanner, prompt)
+        DECLARE isValid AS BOOLEAN
+        SET isValid TO FALSE
+        DECLARE i AS INTEGER
+
+        WHILE NOT isValid
+            TRY
+                PRINT prompt
+                SET i TO scanner.nextInt()
+                SET isValid TO TRUE
+            CATCH InputMismatchException
+                PRINT "Error! Invalid integer value. Try again."
+            FINALLY
+                CLEAR scanner buffer
+            END TRY
+        END WHILE
+
+        RETURN i
+    END METHOD
+
+    METHOD getIntWithinRange(scanner, prompt, min, max)
+        DECLARE isValid AS BOOLEAN
+        SET isValid TO FALSE
+        DECLARE i AS INTEGER
+
+        WHILE NOT isValid
+            SET i TO getInt(scanner, prompt)
+            IF i <= min THEN
+                PRINT "Error! Number must be greater than " + min
+            ELSE IF i >= max THEN
+                PRINT "Error! Number must be less than " + max
+            ELSE
+                SET isValid TO TRUE
+            END IF
+        END WHILE
+
+        RETURN i
+    END METHOD
+
+    METHOD getRequiredString(scanner, prompt)
+        DECLARE isValid AS BOOLEAN
+        SET isValid TO FALSE
+        DECLARE s AS STRING
+
+        WHILE NOT isValid
+            PRINT prompt
+            SET s TO scanner.nextLine().trim()
+            IF s IS EMPTY THEN
+                PRINT "Error! This entry is required. Try again."
+            ELSE
+                SET isValid TO TRUE
+            END IF
+        END WHILE
+
+        RETURN s
+    END METHOD
+
+    METHOD getChoiceString(scanner, prompt, s1, s2)
+        DECLARE isValid AS BOOLEAN
+        SET isValid TO FALSE
+        DECLARE s AS STRING
+
+        WHILE NOT isValid
+            SET s TO getRequiredString(scanner, prompt)
+            IF s IS NOT EQUAL TO s1 AND s IS NOT EQUAL TO s2 THEN
+                PRINT "Error! Entry must be '" + s1 + "' or '" + s2 + "'. Try again."
+            ELSE
+                SET isValid TO TRUE
+            END IF
+        END WHILE
+
+        RETURN s
+    END METHOD
+END CLASS
