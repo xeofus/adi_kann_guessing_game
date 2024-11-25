@@ -1,16 +1,20 @@
 package fit.cis5100.akann2024;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Game {
     private final int number;
     private int guessNumber;
     private int counter;
+    private final Set<String> providedHints;
 
     public Game() {
         number = getRandomNumber();
         guessNumber = 0;
         counter = 1;
+        providedHints = new HashSet<>();
     }
 
     public void displayWelcomeMessage() {
@@ -34,29 +38,47 @@ public class Game {
     public void displayCorrectGuessMessage() {
         System.out.println("You got it in " + counter + " tries.");
         if (counter <= 3) {
-            System.out.println("Great work! You are a mathematical wizard.\n");
+            System.out.println("Great work! You are a mathematical wizard.");
         } else if (counter <= 7) {
-            System.out.println("Not too bad! You've got some potential.\n");
+            System.out.println("Not too bad! You've got some potential.");
         } else {
-            System.out.println("What took you so long? Maybe you should take some lessons.\n");
+            System.out.println("What took you so long? Maybe you should take some lessons.");
         }
+        System.out.println("----------------------------------------");
     }
 
     public void displayGuessAgainMessage() {
         int difference = guessNumber - number;
         if (guessNumber > number) {
             if (difference > 10) {
-                System.out.println("Way too high! Guess again.\n");
+                System.out.println("Way too high! Guess again.");
             } else {
-                System.out.println("Too high! Guess again.\n");
+                System.out.println("Too high! Guess again.");
             }
         } else {
             if (difference < -10) {
-                System.out.println("Way too low! Guess again.\n");
+                System.out.println("Way too low! Guess again.");
             } else {
-                System.out.println("Too low! Guess again.\n");
+                System.out.println("Too low! Guess again.");
             }
         }
+
+        // Provide one unrepeatable hint per prompt
+        if (!providedHints.contains("two-digit number") && number >= 10 && number <= 99) {
+            System.out.println("Hint: The correct number is a two-digit number.");
+            providedHints.add("two-digit number");
+        } else if (!providedHints.contains("even") && number % 2 == 0) {
+            System.out.println("Hint: The correct number is even.");
+            providedHints.add("even");
+        } else if (!providedHints.contains("odd") && number % 2 != 0) {
+            System.out.println("Hint: The correct number is odd.");
+            providedHints.add("odd");
+        } else if (!providedHints.contains("multiple of 5") && number % 5 == 0) {
+            System.out.println("Hint: The number is a multiple of 5.");
+            providedHints.add("multiple of 5");
+        }
+
+        System.out.println();
     }
 
     public void playGame(Scanner sc) {
