@@ -11,7 +11,14 @@ public class Console {
         while (!isValid) {
             try {
                 System.out.print(prompt);
-                i = sc.nextInt();
+                String input = sc.nextLine().trim();
+
+                if (input.equalsIgnoreCase("exit")) {
+                    System.out.println("You chose to exit. Goodbye!");
+                    System.exit(0);
+                }
+
+                i = Integer.parseInt(input);
 
                 if (i <= min) {
                     System.out.println("Error! Number must be greater than " + min);
@@ -20,10 +27,8 @@ public class Console {
                 } else {
                     isValid = true;
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Error! Invalid integer value. Try again.");
-            } finally {
-                sc.nextLine(); // discard invalid input
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Error! Invalid integer value. Try again or type 'exit' to quit.");
             }
         }
         return i;

@@ -14,8 +14,10 @@ public class Game {
     }
 
     public void displayWelcomeMessage() {
+        System.out.println("----------------------------------------");
         System.out.println("Welcome to the Guess the Number Game");
         System.out.println("++++++++++++++++++++++++++++++++++++");
+        System.out.println("You can type 'exit' at any time to quit.");
         System.out.println();
     }
 
