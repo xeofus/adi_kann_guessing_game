@@ -92,4 +92,20 @@ public class Game {
             counter++;
         }
     }
+
+    public void displayGameSummary() {
+        System.out.println("\u001B[36mGame Summary\u001B[0m");
+        System.out.println("\u001B[33m----------------------------------------\u001B[0m");
+        System.out.println("\u001B[32mThe correct number was: \u001B[0m" + number);
+        System.out.println("\u001B[32mNumber of attempts: \u001B[0m" + counter);
+        if (counter <= 3) {
+            System.out.println("\u001B[32mExcellent job! You guessed it very quickly.\u001B[0m");
+        } else if (counter <= 7) {
+            System.out.println("\u001B[33mGood job! You did well.\u001B[0m");
+        } else {
+            System.out.println("\u001B[31mYou eventually got it! Keep practicing to improve.\u001B[0m");
+        }
+        System.out.println("\u001B[33m----------------------------------------\u001B[0m");
+        System.out.println();
+    }
 }

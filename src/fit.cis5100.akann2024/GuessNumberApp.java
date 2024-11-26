@@ -13,6 +13,7 @@ public class GuessNumberApp {
             game.displayWelcomeMessage();
             game.displayPleaseGuessMessage();
             game.playGame(sc);
+            game.displayGameSummary();
             choice = Console.getChoiceString(sc, "Try again? (y/n): ", "y", "n");
             System.out.println();
         }
