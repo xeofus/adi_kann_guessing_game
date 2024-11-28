@@ -1,0 +1,19 @@
+CLASS GuessNumberApp
+    METHOD main()
+        DECLARE scanner AS Scanner
+        DECLARE choice AS STRING
+        SET choice TO "y"
+
+        WHILE choice IS EQUAL TO "y"
+            DECLARE game AS Game
+            CALL game.displayWelcomeMessage()
+            CALL game.displayPleaseGuessMessage()
+            CALL game.playGame(scanner)
+            CALL game.displayGameSummary()
+            SET choice TO Console.getChoiceString(scanner, "Try again? (y/n): ", "y", "n")
+        END WHILE
+
+        PRINT "Bye - Come back soon!"
+    END METHOD
+END CLASS
+

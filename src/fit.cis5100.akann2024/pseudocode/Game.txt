@@ -1,0 +1,98 @@
+CLASS Game
+    METHOD CONSTRUCTOR()
+        SET number TO RANDOM(1 TO 100)
+        SET guessNumber TO 0
+        SET counter TO 1
+        SET providedHints TO EMPTY SET
+    END METHOD
+
+    METHOD displayWelcomeMessage()
+        PRINT "----------------------------------------"
+        PRINT "Welcome to the Guess the Number Game"
+        PRINT "++++++++++++++++++++++++++++++++++++"
+        PRINT "You can type 'exit' at any time to quit."
+    END METHOD
+
+    METHOD getRandomNumber()
+        RETURN RANDOM(1 TO 100)
+    END METHOD
+
+    METHOD displayPleaseGuessMessage()
+        PRINT "I'm thinking of a number from 1 to 100."
+        PRINT "Try to guess it."
+    END METHOD
+
+    METHOD displayCorrectGuessMessage()
+        PRINT "You got it in " + counter + " tries."
+        IF counter <= 3 THEN
+            PRINT "Great work! You are a mathematical wizard."
+        ELSE IF counter <= 7 THEN
+            PRINT "Not too bad! You've got some potential."
+        ELSE
+            PRINT "What took you so long? Maybe you should take some lessons."
+        END IF
+    END METHOD
+
+    METHOD displayGuessAgainMessage()
+        DECLARE difference AS INTEGER
+        SET difference TO guessNumber - number
+
+        IF guessNumber > number THEN
+            IF difference > 10 THEN
+                PRINT "Way too high! Guess again."
+            ELSE
+                PRINT "Too high! Guess again."
+            END IF
+        ELSE
+            IF difference < -10 THEN
+                PRINT "Way too low! Guess again."
+            ELSE
+                PRINT "Too low! Guess again."
+            END IF
+        END IF
+
+        CALL provideHint()
+    END METHOD
+
+    METHOD provideHint()
+        IF number IS BETWEEN 10 AND 99 AND "two-digit number" IS NOT IN providedHints THEN
+            PRINT "Hint: The correct number is a two-digit number."
+            ADD "two-digit number" TO providedHints
+        ELSE IF number MOD 2 IS 0 AND "even" IS NOT IN providedHints THEN
+            PRINT "Hint: The correct number is even."
+            ADD "even" TO providedHints
+        ELSE IF number MOD 2 IS NOT 0 AND "odd" IS NOT IN providedHints THEN
+            PRINT "Hint: The correct number is odd."
+            ADD "odd" TO providedHints
+        ELSE IF number MOD 5 IS 0 AND "multiple of 5" IS NOT IN providedHints THEN
+            PRINT "Hint: The number is a multiple of 5."
+            ADD "multiple of 5" TO providedHints
+        END IF
+    END METHOD
+
+    METHOD playGame(scanner)
+        WHILE guessNumber IS NOT EQUAL TO number
+            SET guessNumber TO Console.getIntWithinRange(scanner, "Enter number: ", 0, 101)
+            IF guessNumber IS EQUAL TO number THEN
+                CALL displayCorrectGuessMessage()
+            ELSE
+                CALL displayGuessAgainMessage()
+            END IF
+            INCREMENT counter
+        END WHILE
+    END METHOD
+
+    METHOD displayGameSummary()
+        PRINT "----------------------------------------"
+        PRINT "Game Summary"
+        PRINT "The correct number was: " + number
+        PRINT "Number of attempts: " + counter
+        IF counter <= 3 THEN
+            PRINT "Excellent job! You guessed it very quickly."
+        ELSE IF counter <= 7 THEN
+            PRINT "Good job! You did well."
+        ELSE
+            PRINT "You eventually got it! Keep practicing to improve."
+        END IF
+    END METHOD
+END CLASS
